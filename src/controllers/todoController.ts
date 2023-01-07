@@ -19,7 +19,32 @@ export const add = async  (req: Request, res: Response)=> {
 }
 
 export const update = async  (req: Request, res: Response)=> {
-    
+    let id: string = req.params.id;
+
+    let todo = await Todo.findByPk(id);
+    if(todo){
+        if(req.body.title){
+            todo.title = req.body.title;
+        }
+        if(req.body.done){
+            switch(req.body.done.toLowerCase()){
+                case '0':
+                case 'false':
+                    todo.done = false;
+                    break;
+                case '1':
+                case 'true':
+                    todo.done = true;
+                    break;
+            }
+        }
+
+        await todo.save();
+        res.json({item: todo});
+
+    } else {
+        res.json({error: 'item não encontrado.'})
+    }
 }
 
 
