@@ -4,11 +4,12 @@ import multer from 'multer';
 
 const storageConfig = multer.diskStorage({
     destination: (req, file, cb)=>{
-        cb(null, './temp');
+        cb(null, './tmp');
     },
 
     filename: (req, file, cb)=>{
-        cb(null, file.fieldname+'.jpg');
+        let randomName = Math.floor(Math.random() * 9999999);
+        cb(null,`${randomName+Date.now()}.jpg`);
     }
 });
 
