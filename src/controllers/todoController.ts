@@ -57,3 +57,8 @@ export const remove = async  (req: Request, res: Response)=> {
     }
     res.json({})
 }
+
+export const uploadFile= async(req: Request, res: Response)=> {
+    console.log(req.file)
+    res.json({});
+}
