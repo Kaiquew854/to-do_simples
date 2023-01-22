@@ -20,7 +20,7 @@ const upload = multer({
         const allowed: string[] = ['image/jpg', 'image/jpeg', 'image/png'];
         cb(null, allowed.includes(file.mimetype));
     },
-    limits: {fieldSize: 1000000} //limite de 1 mb
+    //limits: {fieldSize: 1000000} //limite de 1 mb
 
 });
 
