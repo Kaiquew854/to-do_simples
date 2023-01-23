@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import {Todo} from '../models/todo'
+import sharp from 'sharp'; //biblioteca para manipular arquivos
 
 export const all = async  (req: Request, res: Response)=> {
     const list = await Todo.findAll();
@@ -59,6 +60,15 @@ export const remove = async  (req: Request, res: Response)=> {
 }
 
 export const uploadFile= async(req: Request, res: Response)=> {
-    console.log(req.file)
-    res.json({});
+    if(req.file){
+        await sharp(req.file.path)
+        .resize(500)
+        .toFormat('jpeg')
+        .toFile(`./public/media/${req.file.filename}.jpg`)//salvar
+
+        res.json({image: `${req.file.filename}.jpg`})
+    } else {
+        res.status(400)
+        res.json({error: 'Arquivo inválido'})
+    }
 }
